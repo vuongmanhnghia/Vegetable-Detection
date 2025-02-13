@@ -1,0 +1,14 @@
+fastapi
+ipykernel
+kaggle
+torch
+torchvision
+roboflow
+ultralytics
+uvicorn
+python-dotenv
+motor
+pydantic
+bcrypt
+jwt
+python-jwt

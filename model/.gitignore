@@ -1,0 +1,8 @@
+result_image.jpg
+result_image.png
+
+__pycache__/
+.vscode/
+
+venv/
+.env
