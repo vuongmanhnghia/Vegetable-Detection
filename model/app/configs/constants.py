@@ -1,3 +1,3 @@
 from ultralytics import YOLO
 
-model = YOLO("./runs/detect/train/weights/last.pt")
+model = YOLO("./runs/detect/train/weights/best.pt")
