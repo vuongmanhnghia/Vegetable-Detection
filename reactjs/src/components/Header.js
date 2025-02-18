@@ -1,3 +1,4 @@
+import React from "react";
 import {
 	Box,
 	Heading,
@@ -10,6 +11,8 @@ import {
 	createIcon,
 } from "@chakra-ui/react";
 import ProfileArray from "./ProfileArray";
+import { GoogleLogin } from "@react-oauth/google";
+import { loginGoogle } from "./../api/index";
 
 export default function Header({ color }) {
 	const profile = ProfileArray();
@@ -20,6 +23,15 @@ export default function Header({ color }) {
 	const linkedin = () => {
 		window.open(`${profile.linkedin}`, "_blank", "noreferrer,noopener");
 	};
+
+	const handleSuccess = (credentialResponse) => {
+		loginGoogle(credentialResponse.credential);
+	};
+
+	const handleError = (error) => {
+		console.log(error);
+	};
+
 	return (
 		<>
 			<Heading>
@@ -67,12 +79,11 @@ export default function Header({ color }) {
 							onClick={linkedin}>
 							Start using
 						</Button>
-						<Button
-							variant={"link"}
-							colorScheme={"blue"}
-							size={"sm"}
-							onClick={scrollToContact}>
-							Contact Me
+						<Button variant={"link"} colorScheme={"blue"} size={"sm"}>
+							<GoogleLogin
+								onSuccess={handleSuccess}
+								onError={handleError}
+							/>
 						</Button>
 						<Box>
 							<Icon

@@ -6,30 +6,17 @@ import {
 	Box,
 	HStack,
 	Button,
-	ButtonGroup,
 	Card,
 	CardBody,
 	Image,
 	Heading,
-	SimpleGrid,
 	Badge,
-	Link,
-	Center,
 } from "@chakra-ui/react";
 import { Fade } from "react-reveal";
-import { useState } from "react";
 import ProjectsArray from "./ProjectsArray";
-import OtherProjectsArray from "./OtherProjectsArray";
 
 export default function Projects({ color }) {
 	const projects = ProjectsArray();
-	const others = OtherProjectsArray();
-
-	const [selected, setSelected] = useState("All");
-
-	const handleSelected = (value) => {
-		setSelected(value);
-	};
 
 	return (
 		<>
@@ -44,12 +31,12 @@ export default function Projects({ color }) {
 							<Text color={`${color}.400`} fontWeight={800}>
 								03
 							</Text>
-							<Text fontWeight={800}>Projects</Text>
+							<Text fontWeight={800}>History</Text>
 						</HStack>
 						<Divider orientation="horizontal" />
 					</Stack>
 					<Stack px={4} spacing={4}>
-						{projects.map((project) => (
+						{/* {projects.map((project) => (
 							<Fade bottom>
 								<Card
 									key={project.name}
@@ -87,7 +74,7 @@ export default function Projects({ color }) {
 									</Stack>
 								</Card>
 							</Fade>
-						))}
+						))} */}
 					</Stack>
 				</Stack>
 			</Container>

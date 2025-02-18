@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Nav from "./components/NavBar";
-import Header from "./components/Hero";
+import Header from "./components/Header";
 import About from "./components/About";
 import DetectionTool from "./components/DetectionTool";
 import Projects from "./components/Projects";

@@ -17,6 +17,7 @@ import {
 import { MoonIcon, SunIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import ProfileArray from "./ProfileArray";
+
 const TbIcons = require("react-icons/tb");
 
 export default function Nav({ color }) {

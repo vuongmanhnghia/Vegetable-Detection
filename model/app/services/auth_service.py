@@ -6,6 +6,7 @@ from app.utils.verify_password import verify_password
 from app.utils.token_helper import generate_token, decode_token
 from bson import ObjectId
 
+
 # AuthService
 async def register(user):
     # Kiểm tra xem email đã tồn tại chưa
@@ -93,25 +94,30 @@ async def get_me(current_user):
 
 
 async def change_password(current_user, password):
-        user = await users.find_one({"_id": current_user["_id"]})
-        if user and verify_password(password.old_password, user["password"]):
-            result = await users.update_one(
-                {"_id": current_user["_id"]},
-                {"$set": {"password": password.new_password}},
-            )
-            if result.modified_count:
-                return
-        raise HTTPException(status_code=500, detail="Change password failed")
+    user = await users.find_one({"_id": current_user["_id"]})
+    if user and verify_password(password.old_password, user["password"]):
+        result = await users.update_one(
+            {"_id": current_user["_id"]},
+            {"$set": {"password": password.new_password}},
+        )
+        if result.modified_count:
+            return
+    raise HTTPException(status_code=500, detail="Change password failed")
+
 
 async def change_password_by_id(current_user, password, id: str):
     if current_user["role"] != "admin":
-        raise HTTPException(status_code=403, detail="Only admin can change other users' password")
-    user = await users.find_one({"_id": ObjectId(id)}) 
+        raise HTTPException(
+            status_code=403, detail="Only admin can change other users' password"
+        )
+    user = await users.find_one({"_id": ObjectId(id)})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
     if user["role"] == "admin":
-        raise HTTPException(status_code=403, detail="Admin cannot change password of another admin")
+        raise HTTPException(
+            status_code=403, detail="Admin cannot change password of another admin"
+        )
     result = await users.update_one(
         {"_id": ObjectId(id)},
         {"$set": {"password": password.new_password}},
@@ -120,7 +126,7 @@ async def change_password_by_id(current_user, password, id: str):
         return {"message": "Password updated successfully"}
     else:
         raise HTTPException(status_code=500, detail="Change password failed")
-    
 
 
-
+async def google_login(token: str):
+    return {"message": "Google login"}

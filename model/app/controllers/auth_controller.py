@@ -71,10 +71,23 @@ async def change_password(request, password):
         "message": "Change password success!",
     }
 
+
 async def change_password_by_id(request, password, id):
-    result = await auth_service.change_password_by_id(request.current_user, password, id)
+    result = await auth_service.change_password_by_id(
+        request.current_user, password, id
+    )
     return {
         "status": 200,
         "success": True,
         "message": "Change password success!",
+    }
+
+
+async def google_login(token):
+    result = await auth_service.google_login(token)
+    return {
+        "status": 200,
+        "success": True,
+        "message": "Login success!",
+        "data": result,
     }

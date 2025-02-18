@@ -12,3 +12,5 @@ pydantic
 bcrypt
 jwt
 python-jwt
+httpx
+authlib
