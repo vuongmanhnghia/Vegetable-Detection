@@ -13,10 +13,12 @@ import {
 	useDisclosure,
 	HStack,
 	Link,
+	Avatar,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import ProfileArray from "./ProfileArray";
+import { useSelector } from "react-redux";
 
 const TbIcons = require("react-icons/tb");
 
@@ -74,6 +76,8 @@ export default function Nav({ color }) {
 		TbLetterComponents.push(component);
 	}
 
+	const { authUser } = useSelector((state) => state.auth);
+
 	return (
 		<>
 			<Flex
@@ -96,7 +100,10 @@ export default function Nav({ color }) {
 				</Link>
 
 				<Flex alignItems={"center"}>
-					<Stack direction={"row"} spacing={7}>
+					<Stack
+						style={{ alignItems: "center" }}
+						direction={"row"}
+						spacing={7}>
 						{isLargerThanMD ? (
 							<>
 								<Button variant="ghost" onClick={scrollToAbout}>
@@ -118,7 +125,13 @@ export default function Nav({ color }) {
 						<Button onClick={toggleColorMode}>
 							{colorMode === "light" ? <MoonIcon /> : <SunIcon />}
 						</Button>
-
+						{authUser?.name && (
+							<Avatar
+								size={"md"}
+								src={authUser.avatar}
+								name={authUser.name}
+							/>
+						)}
 						{isLargerThanMD ? (
 							<></>
 						) : (

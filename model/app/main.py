@@ -3,8 +3,10 @@ import uvicorn
 from fastapi import FastAPI
 from .routes import router
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,6 +15,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.mount("/public", StaticFiles(directory="public"), name="public")
 
 app.include_router(router)
 

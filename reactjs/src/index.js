@@ -5,10 +5,11 @@ import "./index.css";
 import App from "./App";
 import theme from "./theme";
 import reportWebVitals from "./reportWebVitals";
-// 1. Import the extendTheme function
 import { ChakraProvider } from "@chakra-ui/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GG_CLIENT_ID } from "./configs/constants";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,13 +17,12 @@ root.render(
 		<React.StrictMode>
 			<ColorModeScript initialColorMode={theme.config.initialColorMode} />
 			<GoogleOAuthProvider clientId={GG_CLIENT_ID}>
-				<App />
+				<Provider store={store}>
+					<App />
+				</Provider>
 			</GoogleOAuthProvider>
 		</React.StrictMode>
 	</ChakraProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

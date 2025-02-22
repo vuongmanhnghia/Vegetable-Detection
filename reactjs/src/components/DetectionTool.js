@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
+import { detectImage } from "../api";
 
 export default function DetectionTool({ color }) {
 	const [imageSrc, setImageSrc] = useState(null);
@@ -27,29 +28,8 @@ export default function DetectionTool({ color }) {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		// Tạo FormData để gửi file
-		const formData = new FormData();
-		formData.append("file", selectedImage);
-
-		try {
-			// Gửi yêu cầu POST đến backend để upload ảnh
-			const response = await fetch("http://127.0.0.1:8000/users/predict/", {
-				method: "POST",
-				body: formData,
-			});
-
-			// Kiểm tra nếu yêu cầu thành công
-			if (response.ok) {
-				// Nhận ảnh và tạo URL để hiển thị
-				const imageBlob = await response.blob();
-				const imageUrl = URL.createObjectURL(imageBlob);
-				setImageSrc(imageUrl); // Cập nhật trạng thái với URL ảnh
-			} else {
-				console.error("Error uploading image:", response.statusText);
-			}
-		} catch (error) {
-			console.error("Error:", error);
-		}
+		const response = await detectImage(selectedImage);
+		setImageSrc(response); // Cập nhật trạng thái với URL ảnh
 	};
 
 	return (

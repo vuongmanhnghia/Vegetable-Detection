@@ -13,19 +13,18 @@ import {
 import ProfileArray from "./ProfileArray";
 import { GoogleLogin } from "@react-oauth/google";
 import { loginGoogle } from "./../api/index";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthUser } from "../store";
 
 export default function Header({ color }) {
+	const dispatch = useDispatch();
 	const profile = ProfileArray();
-	const scrollToContact = () => {
-		const contactSection = document.querySelector("#contact");
-		contactSection.scrollIntoView({ behavior: "smooth" });
-	};
-	const linkedin = () => {
-		window.open(`${profile.linkedin}`, "_blank", "noreferrer,noopener");
-	};
 
-	const handleSuccess = (credentialResponse) => {
-		loginGoogle(credentialResponse.credential);
+	const { authUser } = useSelector((state) => state.auth);
+
+	const handleSuccess = async (credentialResponse) => {
+		const user = await loginGoogle(credentialResponse.credential);
+		dispatch(setAuthUser(user));
 	};
 
 	const handleError = (error) => {
@@ -75,16 +74,17 @@ export default function Header({ color }) {
 							px={6}
 							_hover={{
 								bg: `${color}.500`,
-							}}
-							onClick={linkedin}>
+							}}>
 							Start using
 						</Button>
-						<Button variant={"link"} colorScheme={"blue"} size={"sm"}>
-							<GoogleLogin
-								onSuccess={handleSuccess}
-								onError={handleError}
-							/>
-						</Button>
+						{!authUser?.name && (
+							<Button variant={"link"} colorScheme={"blue"} size={"sm"}>
+								<GoogleLogin
+									onSuccess={handleSuccess}
+									onError={handleError}
+								/>
+							</Button>
+						)}
 						<Box>
 							<Icon
 								as={Arrow}
