@@ -1,6 +1,6 @@
 from fastapi import UploadFile, File, HTTPException
 from fastapi.responses import StreamingResponse
-from app.configs.constants import model
+from app.configs.constants import model, APP_API
 from PIL import Image, UnidentifiedImageError
 from uuid import uuid4
 import io
@@ -61,4 +61,4 @@ async def predict(file: UploadFile):
     image_url = await upload_image(file, processed_image=results)
 
     # Trả về đường dẫn ảnh đã xử lý cho client
-    return image_url
+    return APP_API + image_url

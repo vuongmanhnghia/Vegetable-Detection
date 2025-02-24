@@ -1,8 +1,8 @@
 from app.services import auth_service
 
 
-async def get_me(request):
-    result = await auth_service.get_me(request.current_user)
+async def get_me(user_id):
+    result = await auth_service.profile(user_id)
     return {
         "status": 200,
         "success": True,

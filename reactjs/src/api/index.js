@@ -11,6 +11,19 @@ export const loginGoogle = async (googleToken) => {
 				},
 			}
 		);
+		localStorage.setItem("user_id", response.data.data._id);
+		return response;
+	} catch (error) {
+		return error;
+	}
+};
+
+export const getMe = async () => {
+	try {
+		const user_id = localStorage.getItem("user_id");
+		const response = await axios.get(
+			`${API_APP_URL}/auth/me?user_id=${user_id}`
+		);
 		return response;
 	} catch (error) {
 		return error;
@@ -23,10 +36,22 @@ export const detectImage = async (image) => {
 
 	try {
 		const response = await axios.post(
-			"http://localhost:8000/users/predict/",
+			`${API_APP_URL}/users/predict/`,
 			formData
 		);
-		return `${API_APP_URL}${response.data.data}`;
+		return response.data.data;
+	} catch (error) {
+		return error;
+	}
+};
+
+export const saveImage = async (image_url) => {
+	try {
+		const response = await axios.post(
+			`${API_APP_URL}/users/save/`,
+			image_url
+		);
+		return response;
 	} catch (error) {
 		return error;
 	}

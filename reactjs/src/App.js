@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Nav from "./components/NavBar";
 import Header from "./components/Header";
@@ -7,12 +7,21 @@ import DetectionTool from "./components/DetectionTool";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import { useDispatch } from "react-redux";
+import { getMe } from "./api";
+import { setAuthUser } from "./store";
 
 function App() {
-	// Available Colours:
-	// blue, cyan, gray, green, orange, pink, purple, red, teal, yellow
+	const dispatch = useDispatch();
+	useEffect(() => {
+		// handleGetMe();
+	}, []);
 
-	// edit this variable to change the color theme
+	const handleGetMe = async () => {
+		const user = await getMe();
+		dispatch(setAuthUser(user));
+	};
+
 	const color = "teal";
 
 	return (

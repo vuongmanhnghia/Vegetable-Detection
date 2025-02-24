@@ -1,4 +1,5 @@
 from datetime import timedelta
+from bson import ObjectId
 from app.configs.database import users
 from app.schemas.user_schemas import details_user
 from app.utils.token_helper import generate_token, decode_token
@@ -21,11 +22,9 @@ async def auth_token(user):
     }
 
 
-async def profile(request):
-    user = await users.find_one({"_id": request.state.user["_id"]})
-    user["_id"] = str(user["_id"])
-    user["created_at"] = user["created_at"]
-    user["updated_at"] = user["updated_at"]
+async def profile(user_id):
+    user = await users.find_one({"_id": ObjectId(user_id)})
+    print(user)
     return details_user(user)
 
 

@@ -16,8 +16,10 @@ import { detectImage } from "../api";
 export default function DetectionTool({ color }) {
 	const [imageSrc, setImageSrc] = useState(null);
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [isDetect, setIsDetect] = useState(false);
 
 	const handleImageChange = (event) => {
+		setIsDetect(false);
 		const file = event.target.files[0];
 		if (file) {
 			setSelectedImage(file);
@@ -29,7 +31,12 @@ export default function DetectionTool({ color }) {
 		event.preventDefault();
 
 		const response = await detectImage(selectedImage);
+		setIsDetect(true);
 		setImageSrc(response); // Cập nhật trạng thái với URL ảnh
+	};
+
+	const handleSaveImage = () => {
+		console.log(imageSrc);
 	};
 
 	return (
@@ -95,6 +102,32 @@ export default function DetectionTool({ color }) {
 							)}
 						</Center>
 					</Stack>
+					{isDetect && (
+						<Stack px={4} spacing={4}>
+							<Center px={4}>
+								<div
+									// onSubmit={handleSubmit}
+									style={{
+										display: "flex",
+										flexDirection: "column",
+										alignItems: "center",
+										gap: "1rem",
+									}}>
+									<Button
+										colorScheme={color}
+										bg={`${color}.400`}
+										rounded={"full"}
+										px={6}
+										_hover={{
+											bg: `${color}.500`,
+										}}
+										onClick={handleSaveImage}>
+										Save
+									</Button>
+								</div>
+							</Center>
+						</Stack>
+					)}
 				</Stack>
 			</Container>
 		</>

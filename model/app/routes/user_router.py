@@ -8,3 +8,9 @@ userRouter = APIRouter()
 @userRouter.post("/predict/")
 async def predict(file: UploadFile = File(...)):
     return await user_controller.predict(file)
+
+
+# @userRouter.post("/save")
+# @require_authentication
+# async def save_image(file: UploadFile = File(...)):
+#     return await user_controller.save_image(file)
