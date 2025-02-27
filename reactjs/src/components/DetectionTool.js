@@ -50,7 +50,7 @@ export default function DetectionTool({ color }) {
 					<Stack align="center" direction="row" px={4}>
 						<HStack mx={4}>
 							<Text color={`${color}.400`} fontWeight={800}>
-								02
+								01
 							</Text>
 							<Text fontWeight={800}>Detection</Text>
 						</HStack>

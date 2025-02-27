@@ -29,7 +29,7 @@ export default function Projects({ color }) {
 					<Stack align="center" direction="row" p={4}>
 						<HStack mx={4}>
 							<Text color={`${color}.400`} fontWeight={800}>
-								03
+								02
 							</Text>
 							<Text fontWeight={800}>History</Text>
 						</HStack>
