@@ -28,7 +28,7 @@ function App() {
 		<>
 			<Nav color={color} />
 			<Header color={color} />
-			<About color={color} />
+
 			<DetectionTool color={color} />
 			<History color={color} />
 			<Contact color={color} />
