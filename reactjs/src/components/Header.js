@@ -49,11 +49,15 @@ export default function Header({ color }) {
 						fontWeight={600}
 						fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
 						lineHeight={"110%"}>
-						<Text as={"span"} color={`${color}.400`}></Text>
+						<Text as={"span"} color={`${color}.400`}>
+							PTIT x FIT
+						</Text>
 					</Heading>
 					<Text
 						color={"gray.500"}
-						fontSize={{ base: "lg", sm: "xl", md: "2xl" }}></Text>
+						fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
+						GreenVision - AI-Powered Vegetable Detection
+					</Text>
 					<Stack
 						direction={"column"}
 						spacing={3}

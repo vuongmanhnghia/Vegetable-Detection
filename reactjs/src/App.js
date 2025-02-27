@@ -8,18 +8,23 @@ import History from "./components/History";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { useDispatch } from "react-redux";
-import { getMe } from "./api";
+import { getHistory, getMe } from "./api";
 import { setAuthUser } from "./store";
+import RealtimeDetection from "./components/Realtime";
 
 function App() {
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		handleGetMe();
 	}, []);
 
 	const handleGetMe = async () => {
 		const user = await getMe();
-		dispatch(setAuthUser(user));
+		if (user) {
+			dispatch(setAuthUser(user));
+			await getHistory();
+		}
 	};
 
 	const color = "teal";
@@ -30,6 +35,7 @@ function App() {
 			<Header color={color} />
 			<About color={color} />
 			<DetectionTool color={color} />
+			<RealtimeDetection color={color} />
 			<History color={color} />
 			<Contact color={color} />
 			<Footer />

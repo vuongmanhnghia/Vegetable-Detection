@@ -6,12 +6,8 @@ import {
 	Box,
 	HStack,
 	Image,
-	CardHeader,
-	Heading,
 	CardBody,
 	Card,
-	StackDivider,
-	CardFooter,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,32 +49,22 @@ export default function Projects({ color }) {
 					<Stack px={4} spacing={4}>
 						{histories?.map((history, index) => (
 							<Card
+								margin={"0 5rem"}
+								style={{ padding: "0.5rem" }}
 								direction={{ base: "column", sm: "row" }}
 								overflow="hidden"
 								variant="outline">
 								<Image
+									cursor={"pointer"}
+									width={{ base: "100%" }}
 									objectFit="cover"
-									maxW={{ base: "100%", sm: "200px" }}
+									height={{ base: "200px" }}
 									src={`${API_APP_URL}${history.image_url}`}
 									alt="Caffe Latte"
+									onClick={() =>
+										window.open(`${API_APP_URL}${history.image_url}`)
+									}
 								/>
-
-								<Stack>
-									<CardBody>
-										<Heading size="md">The perfect latte</Heading>
-
-										<Text py="2">
-											Caffè latte is a coffee beverage of Italian
-											origin made with espresso and steamed milk.
-										</Text>
-									</CardBody>
-
-									<CardFooter>
-										<Button variant="solid" colorScheme="blue">
-											Buy Latte
-										</Button>
-									</CardFooter>
-								</Stack>
 							</Card>
 						))}
 					</Stack>

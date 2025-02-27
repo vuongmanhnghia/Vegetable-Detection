@@ -5,27 +5,29 @@ from PIL import Image, UnidentifiedImageError
 from app.configs.database import histories
 from app.schemas.history_schemas import list_history
 from uuid import uuid4
+from datetime import datetime
+import shutil
 import io
 import os
 
 
-async def upload_image(file: UploadFile = File(...), processed_image=None):
+SAVE_DIRECTORY = "public/images"
+SAVE_FILENAME = "processed_image.jpg"
+os.makedirs(SAVE_DIRECTORY, exist_ok=True)  # Đảm bảo thư mục tồn tại
+
+
+async def upload_image(file_content, processed_image=None):
     try:
-        file_extension = file.filename.split(".")[-1]
-        file_name = f"{uuid4()}.{file_extension}"
+        os.makedirs(SAVE_DIRECTORY, exist_ok=True)  # Đảm bảo thư mục tồn tại
+        file_path = os.path.join(SAVE_DIRECTORY, SAVE_FILENAME)
 
         if processed_image:
-
-            file_path = os.path.join("public/images", file_name)
             processed_image.save(file_path)
         else:
-            file_content = await file.read()
-            os.makedirs("public/images", exist_ok=True)  # Tạo thư mục nếu chưa tồn tại
-            file_path = os.path.join("public/images", file_name)
             with open(file_path, "wb") as f:
                 f.write(file_content)
-        image_url = f"/public/images/{file_name}"
-        return image_url
+
+        return f"/{SAVE_DIRECTORY}/{SAVE_FILENAME}"
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -44,7 +46,12 @@ async def predict(file: UploadFile):
 
     results = model(image)
     if isinstance(results, list):
+        if not results:  # Nếu danh sách rỗng
+            return {"error": "No detections found in the image."}
         results = results[0]
+
+    if hasattr(results, "boxes") and len(results.boxes) == 0:
+        return {"error": "No objects detected in the image."}
 
     result_image_path = "result_image.jpg"
     results.save(result_image_path)
@@ -55,10 +62,21 @@ async def predict(file: UploadFile):
 
 
 async def save_image(image_url: str, user):
+
+    filename = f"{user['_id']}_{datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
+    new_image_path = os.path.join(SAVE_DIRECTORY, filename)
+
     image_url_format = image_url.replace(APP_API, "")
+    image_url_format = os.path.join(os.getcwd(), image_url_format.lstrip("/"))
+    if not os.path.exists(image_url_format):
+        raise FileNotFoundError(f"Image file not found: {image_url_format}")
+    shutil.copy(image_url_format, new_image_path)
+
     await histories.insert_one(
-        {"user_id": (ObjectId(user["_id"])), "image_url": image_url_format}
+        {"user_id": ObjectId(user["_id"]), "image_url": f"/{SAVE_DIRECTORY}/{filename}"}
     )
+
+    return f"/{SAVE_DIRECTORY}/{filename}"
 
 
 async def get_history(user):

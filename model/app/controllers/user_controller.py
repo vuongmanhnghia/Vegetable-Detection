@@ -12,7 +12,6 @@ async def predict(file):
 
 
 async def save_image(image_url, request):
-    print("IMAGE_URL", image_url)
     await user_service.save_image(image_url, request.current_user)
     return {
         "status": 200,
