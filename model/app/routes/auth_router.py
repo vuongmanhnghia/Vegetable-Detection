@@ -11,5 +11,13 @@ async def google_login(token: str):
 
 
 @authRouter.get("/me")
-async def me(user_id: str):
-    return await auth_controller.get_me(user_id)
+async def me(user_id):
+    if not user_id:
+        return {
+            "status": 400,
+            "success": False,
+            "message": "User not found",
+            "data": None,
+        }
+    else:
+        return await auth_controller.get_me(user_id)

@@ -23,8 +23,9 @@ async def auth_token(user):
 
 
 async def profile(user_id):
-    user = await users.find_one({"_id": ObjectId(user_id)})
-    return details_user(user)
+    if user_id and ObjectId.is_valid(user_id):
+        user = await users.find_one({"_id": ObjectId(user_id)})
+        return details_user(user)
 
 
 async def google_login(token):

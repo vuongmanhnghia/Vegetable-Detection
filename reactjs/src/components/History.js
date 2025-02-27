@@ -52,45 +52,34 @@ export default function Projects({ color }) {
 					</Stack>
 					<Stack px={4} spacing={4}>
 						{histories?.map((history, index) => (
-							<>
+							<Card
+								direction={{ base: "column", sm: "row" }}
+								overflow="hidden"
+								variant="outline">
 								<Image
-									index={index}
-									border="1px solid red"
-									rounded="md"
-									h="200px"
-									w="100%"
-									fit="contain"
+									objectFit="cover"
+									maxW={{ base: "100%", sm: "200px" }}
 									src={`${API_APP_URL}${history.image_url}`}
+									alt="Caffe Latte"
 								/>
-								<Card
-									direction={{ base: "column", sm: "row" }}
-									overflow="hidden"
-									variant="outline">
-									<Image
-										objectFit="cover"
-										maxW={{ base: "100%", sm: "200px" }}
-										src={`${API_APP_URL}${history.image_url}`}
-										alt="Caffe Latte"
-									/>
 
-									<Stack>
-										<CardBody>
-											<Heading size="md">The perfect latte</Heading>
+								<Stack>
+									<CardBody>
+										<Heading size="md">The perfect latte</Heading>
 
-											<Text py="2">
-												Caffè latte is a coffee beverage of Italian
-												origin made with espresso and steamed milk.
-											</Text>
-										</CardBody>
+										<Text py="2">
+											Caffè latte is a coffee beverage of Italian
+											origin made with espresso and steamed milk.
+										</Text>
+									</CardBody>
 
-										<CardFooter>
-											<Button variant="solid" colorScheme="blue">
-												Buy Latte
-											</Button>
-										</CardFooter>
-									</Stack>
-								</Card>
-							</>
+									<CardFooter>
+										<Button variant="solid" colorScheme="blue">
+											Buy Latte
+										</Button>
+									</CardFooter>
+								</Stack>
+							</Card>
 						))}
 					</Stack>
 				</Stack>
