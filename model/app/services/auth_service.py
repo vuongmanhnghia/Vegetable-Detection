@@ -24,7 +24,6 @@ async def auth_token(user):
 
 async def profile(user_id):
     user = await users.find_one({"_id": ObjectId(user_id)})
-    print(user)
     return details_user(user)
 
 
@@ -48,8 +47,6 @@ async def google_login(token):
             "avatar": picture,
             "google_id": sub,
         }
-        print("account", account)
-        print("type", type(account))
         await users.insert_one(account)
     print("account", account)
     account["_id"] = str(account["_id"])

@@ -10,10 +10,13 @@ import {
 	Center,
 } from "@chakra-ui/react";
 
-import { useState, useEffect } from "react";
-import { detectImage } from "../api";
+import { useState } from "react";
+import { detectImage, getHistory, saveImage } from "../api";
+import { setHistories } from "../store";
+import { useDispatch } from "react-redux";
 
 export default function DetectionTool({ color }) {
+	const dispatch = useDispatch();
 	const [imageSrc, setImageSrc] = useState(null);
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [isDetect, setIsDetect] = useState(false);
@@ -35,8 +38,14 @@ export default function DetectionTool({ color }) {
 		setImageSrc(response); // Cập nhật trạng thái với URL ảnh
 	};
 
-	const handleSaveImage = () => {
-		console.log(imageSrc);
+	const fetchHistories = async () => {
+		const histories = await getHistory();
+		dispatch(setHistories(histories));
+	};
+
+	const handleSaveImage = async () => {
+		await saveImage(imageSrc);
+		await fetchHistories();
 	};
 
 	return (

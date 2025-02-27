@@ -1,15 +1,14 @@
 import {
-  Divider,
-  Stack,
-  Text,
-  Container,
-  Box,
-  HStack,
-  Heading,
-  Center,
+	Divider,
+	Stack,
+	Text,
+	Container,
+	Box,
+	HStack,
+	Heading,
+	Center,
 } from "@chakra-ui/react";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
-import ProfileArray from "./ProfileArray";
 
 export default function Contact({ color }) {
   const profile = ProfileArray();
@@ -37,4 +36,3 @@ export default function Contact({ color }) {
     </>
   );
 }
-

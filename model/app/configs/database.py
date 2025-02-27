@@ -6,3 +6,4 @@ client = AsyncIOMotorClient(MONGO_URL)
 db = client["VegetableDetection"]
 
 users = db["users"]
+histories = db["histories"]

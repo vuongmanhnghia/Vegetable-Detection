@@ -47,10 +47,33 @@ export const detectImage = async (image) => {
 
 export const saveImage = async (image_url) => {
 	try {
+		const user_id = localStorage.getItem("user_id");
 		const response = await axios.post(
-			`${API_APP_URL}/users/save/`,
-			image_url
+			`${API_APP_URL}/users/save?image_url=${image_url}`,
+			{},
+			{
+				headers: {
+					user_id: user_id,
+					"Content-Type": "application/json",
+				},
+			}
 		);
+
+		return response;
+	} catch (error) {
+		return error;
+	}
+};
+
+export const getHistory = async () => {
+	try {
+		const user_id = localStorage.getItem("user_id");
+		const response = await axios.get(`${API_APP_URL}/users/history`, {
+			headers: {
+				user_id: user_id,
+				"Content-Type": "application/json",
+			},
+		});
 		return response;
 	} catch (error) {
 		return error;

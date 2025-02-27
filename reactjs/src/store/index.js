@@ -5,20 +5,24 @@ const authSlice = createSlice({
 	name: "counter",
 	initialState: {
 		authUser: {},
+		histories: [],
 	},
 	reducers: {
 		setAuthUser(state, action) {
 			state.authUser = action.payload.data.data;
 		},
+		setHistories(state, action) {
+			state.histories = action.payload.data.data;
+		},
 	},
 });
 
-// Bước 2: Tạo store với reducer từ slice
 const store = configureStore({
 	reducer: {
 		auth: authSlice.reducer,
 	},
 });
 
-export const { increment, decrement, setAuthUser } = authSlice.actions;
+export const { increment, decrement, setAuthUser, setHistories } =
+	authSlice.actions;
 export default store;
