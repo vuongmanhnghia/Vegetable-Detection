@@ -1,21 +1,12 @@
 from fastapi import Request, HTTPException
-from starlette.middleware.base import BaseHTTPMiddleware
-from app.utils.token_helper import verifyToken
 from app.configs.database import users
 from bson import ObjectId
 
 
 async def require_authentication(request: Request):
-
     try:
-        # Get token from request headers
-        token = request.headers.get("Authorization")
-
-        if token:
-
-            # Tách chuỗi token
-            token = token.split(" ")[1]
-            user_id = await verifyToken(token)
+        user_id = request.headers.get("user_id")
+        if user_id:
             user = await users.find_one({"_id": ObjectId(user_id)})
             if user:
                 request.current_user = user

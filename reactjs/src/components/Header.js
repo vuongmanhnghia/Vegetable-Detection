@@ -10,7 +10,6 @@ import {
 	useColorModeValue,
 	createIcon,
 } from "@chakra-ui/react";
-import ProfileArray from "./ProfileArray";
 import { GoogleLogin } from "@react-oauth/google";
 import { loginGoogle } from "./../api/index";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +17,6 @@ import { setAuthUser } from "../store";
 
 export default function Header({ color }) {
 	const dispatch = useDispatch();
-	const profile = ProfileArray();
 
 	const { authUser } = useSelector((state) => state.auth);
 
@@ -51,16 +49,11 @@ export default function Header({ color }) {
 						fontWeight={600}
 						fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
 						lineHeight={"110%"}>
-						{profile.headerName} <br />
-						<Text as={"span"} color={`${color}.400`}>
-							{profile.headerRole}
-						</Text>
+						<Text as={"span"} color={`${color}.400`}></Text>
 					</Heading>
 					<Text
 						color={"gray.500"}
-						fontSize={{ base: "lg", sm: "xl", md: "2xl" }}>
-						{profile.headerDesc}
-					</Text>
+						fontSize={{ base: "lg", sm: "xl", md: "2xl" }}></Text>
 					<Stack
 						direction={"column"}
 						spacing={3}

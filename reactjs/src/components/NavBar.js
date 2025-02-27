@@ -17,13 +17,11 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import ProfileArray from "./ProfileArray";
 import { useSelector } from "react-redux";
 
 const TbIcons = require("react-icons/tb");
 
 export default function Nav({ color }) {
-	const profile = ProfileArray();
 	const colors = {
 		blue: "#3182CE",
 		cyan: "#00B5D8",
@@ -69,12 +67,6 @@ export default function Nav({ color }) {
 	window.addEventListener("scroll", changeScroll);
 
 	const TbLetterComponents = [];
-
-	for (let i = 0; i < profile.logo.length; i++) {
-		const letter = profile.logo[i];
-		const component = TbIcons[`TbLetter${letter}`];
-		TbLetterComponents.push(component);
-	}
 
 	const { authUser } = useSelector((state) => state.auth);
 

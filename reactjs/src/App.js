@@ -4,7 +4,7 @@ import Nav from "./components/NavBar";
 import Header from "./components/Header";
 import About from "./components/About";
 import DetectionTool from "./components/DetectionTool";
-import Projects from "./components/Projects";
+import History from "./components/History";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,7 @@ import { setAuthUser } from "./store";
 function App() {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// handleGetMe();
+		handleGetMe();
 	}, []);
 
 	const handleGetMe = async () => {
@@ -30,7 +30,7 @@ function App() {
 			<Header color={color} />
 			<About color={color} />
 			<DetectionTool color={color} />
-			<Projects color={color} />
+			<History color={color} />
 			<Contact color={color} />
 			<Footer />
 		</>
