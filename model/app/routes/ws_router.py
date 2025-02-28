@@ -39,11 +39,12 @@ async def process_frame(image_data):
 
 @wsRouter.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    print("Client connected")
     await websocket.accept()
     try:
         while True:
-            data = await websocket.receive_text()  # Nhận frame dạng base64 từ FE
-            response = await process_frame(data)  # Xử lý ảnh
-            await websocket.send_json(response)  # Gửi kết quả về FE
+            data = await websocket.receive_text()
+            response = await process_frame(data)
+            await websocket.send_json(response)
     except WebSocketDisconnect:
         print("Client disconnected")

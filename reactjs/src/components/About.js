@@ -18,7 +18,18 @@ export default function About({ color }) {
 						</HStack>
 						<Divider orientation="horizontal" />
 					</Stack>
-					<Text color={"gray.600"} fontSize={"xl"} px={4}></Text>
+					<Text color={"gray.600"} fontSize={"xl"} px={4}>
+						Our <b>Vegetable Detection Project</b> utilizes advanced
+						computer vision and machine learning techniques to accurately
+						identify various types of vegetables. This system is designed
+						to assist in agricultural automation, food quality control,
+						and smart retail solutions. By leveraging deep learning
+						models, our solution can recognize vegetables in real time,
+						improving efficiency in sorting, classification, and inventory
+						management. The project aims to enhance productivity, reduce
+						food waste, and support sustainability efforts in the food
+						industry.
+					</Text>
 				</Stack>
 			</Container>
 		</>

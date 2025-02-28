@@ -9,18 +9,42 @@ const RealtimeDetection = ({ color }) => {
 	const [socket, setSocket] = useState(null);
 	const [resultImage, setResultImage] = useState(null);
 	const [isRealtime, setIsRealtime] = useState(false);
+	const [reconnectAttempts, setReconnectAttempts] = useState(0);
 
-	useEffect(() => {
+	const connectWebSocket = () => {
 		const ws = new WebSocket(SERVER_URL);
-		ws.onopen = () => console.log("Connected to server");
+
+		ws.onopen = () => {
+			console.log("Connected to WebSocket server");
+			setReconnectAttempts(0);
+		};
+
+		ws.onerror = (error) => console.error("WebSocket error:", error);
+
 		ws.onmessage = (event) => {
 			const data = JSON.parse(event.data);
 			if (data.image) {
 				setResultImage(`data:image/jpeg;base64,${data.image}`);
 			}
 		};
-		setSocket(ws);
-		return () => ws.close();
+
+		ws.onclose = () => {
+			console.warn("WebSocket closed, attempting to reconnect...");
+			if (reconnectAttempts < 5) {
+				// Giới hạn số lần reconnect
+				setTimeout(() => {
+					setReconnectAttempts(reconnectAttempts + 1);
+					setSocket(connectWebSocket());
+				}, 3000);
+			}
+		};
+
+		return ws;
+	};
+
+	useEffect(() => {
+		setSocket(connectWebSocket());
+		return () => socket?.close();
 	}, []);
 
 	const captureFrame = () => {
@@ -38,47 +62,25 @@ const RealtimeDetection = ({ color }) => {
 	};
 
 	useEffect(() => {
-		const interval = setInterval(captureFrame, 1000 / 5);
+		const interval = setInterval(captureFrame, 200);
 		return () => clearInterval(interval);
-	}, [socket]);
+	}, [isRealtime, socket]);
 
 	return (
-		<Container maxW={"3xl"} id="detectionTool">
-			<Stack
-				as={Box}
-				textAlign={"center"}
-				spacing={{ base: 8, md: 14 }}
-				pb={{ base: 20, md: 36 }}>
-				<Stack px={4} spacing={4}>
-					<Center px={4}>
-						<Button
-							colorScheme={color}
-							bg={`${color}.400`}
-							rounded={"full"}
-							px={6}
-							_hover={{
-								bg: `${color}.500`,
-							}}
-							onClick={() => setIsRealtime(!isRealtime)}>
-							Camere {isRealtime ? "Off" : "On"}
-						</Button>
-					</Center>
-				</Stack>
+		<Container maxW={"3xl"}>
+			<Stack as={Box} textAlign={"center"} spacing={8} pb={20}>
+				<Center>
+					<Button
+						colorScheme={color}
+						onClick={() => setIsRealtime(!isRealtime)}>
+						Camera {isRealtime ? "Off" : "On"}
+					</Button>
+				</Center>
 				{isRealtime && (
 					<>
-						<Webcam
-							ref={webcamRef}
-							screenshotFormat="image/jpeg"
-							className="border rounded-lg"
-						/>
-						<h2 className="mt-4">Processed Image:</h2>
-						{resultImage && (
-							<img
-								src={resultImage}
-								alt="Processed Result"
-								className="border rounded-lg mt-2"
-							/>
-						)}
+						<Webcam ref={webcamRef} screenshotFormat="image/jpeg" />
+						<h2>Processed Image:</h2>
+						{resultImage && <img src={resultImage} alt="Processed" />}
 					</>
 				)}
 			</Stack>

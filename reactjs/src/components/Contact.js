@@ -12,7 +12,12 @@ import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
 export default function Contact({ color }) {
 	const linkedin = () => {};
-	const github = () => {};
+	const github = () => {
+		window.open(
+			"https://github.com/vuongmanhnghia/Vegetable-Detection.git",
+			"_blank"
+		); // Mở link trong tab mới
+	};
 	const email = () => {};
 	return (
 		<>
@@ -36,7 +41,9 @@ export default function Contact({ color }) {
 						as={Container}
 						maxW={"3xl"}
 						textAlign={"center"}>
-						<Heading fontSize={"3xl"}>Let's stay in touch!</Heading>
+						<Heading fontSize={"3xl"} color={`gray.500`} fontWeight={700}>
+							Contact me if you need help!
+						</Heading>
 						<Text color={"gray.600"} fontSize={"xl"} px={4}></Text>
 						<Text
 							color={`${color}.500`}
@@ -45,9 +52,7 @@ export default function Contact({ color }) {
 							px={4}></Text>
 						<Center>
 							<HStack pt={4} spacing={4}>
-								<FaLinkedin onClick={linkedin} size={28} />
-								<FaGithub onClick={github} size={28} />
-								<FaEnvelope onClick={email} size={28} />
+								<FaGithub onClick={github} size={50} />
 							</HStack>
 						</Center>
 					</Stack>

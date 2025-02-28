@@ -29,6 +29,11 @@ export default function Header({ color }) {
 		console.log(error);
 	};
 
+	const scrollToDetectionTool = () => {
+		const experienceSection = document.querySelector("#detectionTool");
+		experienceSection.scrollIntoView({ behavior: "smooth" });
+	};
+
 	return (
 		<>
 			<Heading>
@@ -69,6 +74,7 @@ export default function Header({ color }) {
 							bg={`${color}.400`}
 							rounded={"full"}
 							px={6}
+							onClick={scrollToDetectionTool}
 							_hover={{
 								bg: `${color}.500`,
 							}}>
