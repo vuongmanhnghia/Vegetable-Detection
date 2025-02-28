@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import "./App.css";
 import Nav from "./components/NavBar";
 import Header from "./components/Header";
-import About from "./components/About";
+
 import DetectionTool from "./components/DetectionTool";
 import History from "./components/History";
 import Contact from "./components/Contact";
@@ -10,31 +10,35 @@ import Footer from "./components/Footer";
 import { useDispatch } from "react-redux";
 import { getMe } from "./api";
 import { setAuthUser } from "./store";
+import Particles from "react-tsparticles";
+import particlesConfig from "./particlesConfig";
 
 function App() {
-	const dispatch = useDispatch();
-	useEffect(() => {
-		handleGetMe();
-	}, []);
+  const dispatch = useDispatch();
+  const handleGetMe = useCallback(async () => {
+    const user = await getMe();
+    dispatch(setAuthUser(user));
+  }, [dispatch]);
 
-	const handleGetMe = async () => {
-		const user = await getMe();
-		dispatch(setAuthUser(user));
-	};
+  useEffect(() => {
+    handleGetMe();
+  }, [handleGetMe]);
 
-	const color = "teal";
+  const color = "teal";
 
-	return (
-		<>
-			<Nav color={color} />
-			<Header color={color} />
-
-			<DetectionTool color={color} />
-			<History color={color} />
-			<Contact color={color} />
-			<Footer />
-		</>
-	);
+  return (
+    <div className="App">
+      <Particles params={particlesConfig} />
+      <div className="content">
+        <Nav color={color} />
+        <Header color={color} />
+        <DetectionTool color={color} />
+        <History color={color} />
+        <Contact color={color} />
+        <Footer />
+      </div>
+    </div>
+  );
 }
 
 export default App;

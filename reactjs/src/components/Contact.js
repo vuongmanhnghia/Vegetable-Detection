@@ -9,7 +9,7 @@ import {
 	Center,
 } from "@chakra-ui/react";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
-
+import "./contact.css";
 export default function Contact({ color }) {
 	const github = () => {
 		window.open('https://github.com/vuongmanhnghia/Vegetable-Detection.git', '_blank'); // Mở link trong tab mới
@@ -50,7 +50,9 @@ export default function Contact({ color }) {
 								
 							</HStack>
 						</Center>
+
 					</Stack>
+				<h1 className="k">khanh</h1>
 				</Stack>
 			</Container>
 		</>
